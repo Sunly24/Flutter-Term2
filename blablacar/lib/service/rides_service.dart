@@ -24,3 +24,14 @@ class RidesService {
         .toList();
   }
 }
+
+void main() {
+  for (var ride in RidesService.availableRides) {
+    print('From: ${ride.departureLocation}');
+    print('To: ${ride.arrivalLocation}');
+    print('Date: ${ride.departureDate}');
+    print('Price: ${ride.pricePerSeat}€');
+    print('Driver: ${ride.driver}');
+    print('---------------------');
+  }
+}
