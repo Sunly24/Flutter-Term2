@@ -4,6 +4,7 @@ import '../../../model/ride/locations.dart';
 import '../../../model/ride_pref/ride_pref.dart';
 import '../../../widgets/display/bla_divider.dart';
 import '../../../widgets/actions/bla_button.dart';
+import 'location_picker.dart';
 import '../../../theme/theme.dart';
 
 ///
@@ -74,9 +75,17 @@ class _RidePrefFormState extends State<RidePrefForm> {
   // Handle events
   // ----------------------------------
 
-  void _handleDepartureSelected(Location location) {}
+  void _handleDepartureSelected(Location? location) {
+    setState(() {
+      departure = location;
+    });
+  }
 
-  void _handleArrivalSelected(Location location) {}
+  void _handleArrivalSelected(Location? location) {
+    setState(() {
+      arrival = location;
+    });
+  }
 
   void _handleDateSelected(DateTime date) {}
 
@@ -85,12 +94,13 @@ class _RidePrefFormState extends State<RidePrefForm> {
   /// Creates and submits a RidePref object when form is valid
   void _handleSubmit() {
     if (_isFormValid) {
-      widget.onSubmit(RidePref(
+      final pref = RidePref(
         departure: departure!,
         arrival: arrival!,
         departureDate: departureDate,
         requestedSeats: requestedSeats,
-      ));
+      );
+      widget.onSubmit(pref);
     }
   }
 
@@ -137,8 +147,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
                       child: IconButton(
                         icon: const Icon(Icons.swap_vert),
                         onPressed: _handleLocationSwitch,
-                        color: BlaColors.neutralLight,
-                        tooltip: 'Switch locations',
+                        color: BlaColors.primary,
                       ),
                     ),
                   ],
@@ -192,12 +201,15 @@ class _RidePrefFormState extends State<RidePrefForm> {
   Widget _buildLocationField({
     required String hint,
     required Location? initialLocation,
-    required ValueChanged<Location> onLocationSelected,
+    required ValueChanged<Location?> onLocationSelected,
     required IconData icon,
   }) {
     return InkWell(
       onTap: () {
-        // TODO: Implement location selection
+        _showLocationPicker(
+          initialLocation,
+          onLocationSelected,
+        );
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: BlaSpacings.s),
@@ -277,5 +289,21 @@ class _RidePrefFormState extends State<RidePrefForm> {
         ),
       ),
     );
+  }
+
+  Future<void> _showLocationPicker(
+    Location? initialLocation,
+    Function(Location?) onLocationSelected,
+  ) async {
+    final Location? result = await showModalBottomSheet<Location>(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return LocationPickerScreen(
+          initialQuery: initialLocation?.name,
+        );
+      },
+    );
+    onLocationSelected(result);
   }
 }
