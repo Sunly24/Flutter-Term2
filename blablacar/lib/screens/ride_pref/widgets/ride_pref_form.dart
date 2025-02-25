@@ -7,6 +7,7 @@ import '../../../widgets/actions/bla_button.dart';
 import 'location_picker.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/animations_util.dart';
+import '../../../screens/ride_screen.dart';
 
 ///
 /// A Ride Preference From is a view to select:
@@ -47,11 +48,8 @@ class _RidePrefFormState extends State<RidePrefForm> {
   /// Number of passengers
   late int requestedSeats;
 
-  /// Form is valid when both locations are selected and date is in the future
-  bool get _isFormValid =>
-      departure != null &&
-      arrival != null &&
-      departureDate.isAfter(DateTime.now());
+  /// Form is valid when both locations are selected
+  bool get _isFormValid => departure != null && arrival != null;
 
   // ----------------------------------
   // Initialize the Form attributes
@@ -88,20 +86,38 @@ class _RidePrefFormState extends State<RidePrefForm> {
     });
   }
 
-  void _handleDateSelected(DateTime date) {}
+  void _handleDateSelected(DateTime date) {
+    setState(() {
+      departureDate = date;
+    });
+  }
 
-  void _handleSeatsChanged(int seats) {}
+  void _handleSeatsChanged(int seats) {
+    setState(() {
+      requestedSeats = seats;
+    });
+  }
 
   /// Creates and submits a RidePref object when form is valid
   void _handleSubmit() {
     if (_isFormValid) {
-      final pref = RidePref(
-        departure: departure!,
-        arrival: arrival!,
-        departureDate: departureDate,
-        requestedSeats: requestedSeats,
+      Navigator.of(context).push(
+        AnimationUtils.createBottomToTopRoute(
+          RideScreen(
+            departure: departure!.name,
+            arrival: arrival!.name,
+            date: departureDate,
+            seats: requestedSeats,
+          ),
+        ),
       );
-      widget.onSubmit(pref);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please select both departure and arrival locations'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
