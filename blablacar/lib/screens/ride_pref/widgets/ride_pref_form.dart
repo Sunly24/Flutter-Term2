@@ -5,6 +5,7 @@ import '../../../model/ride_pref/ride_pref.dart';
 import '../../../widgets/display/bla_divider.dart';
 import '../../../widgets/actions/bla_button.dart';
 import 'location_picker.dart';
+import 'date_picker.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/animations_util.dart';
 import '../../../screens/ride_screen.dart';
@@ -256,24 +257,36 @@ class _RidePrefFormState extends State<RidePrefForm> {
   /// Builds the date selection field
   Widget _buildDateField() {
     return InkWell(
-      onTap: () {
-        // TODO: Implement date selection
+      onTap: () async {
+        final result = await Navigator.of(context).push<DateTime>(
+          AnimationUtils.createBottomToTopRoute(
+            DateSelectionScreen(initialDate: departureDate),
+          ),
+        );
+        if (result != null) {
+          _handleDateSelected(result);
+        }
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: BlaSpacings.s),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(
-              Icons.calendar_month_outlined,
-              color: BlaColors.neutralLight,
-              size: 24,
-            ),
-            const SizedBox(width: BlaSpacings.m),
-            Text(
-              'Today',
-              style: BlaTextStyles.body.copyWith(
-                color: BlaColors.textNormal,
-              ),
+            Row(
+              children: [
+                Icon(
+                  Icons.calendar_month_outlined,
+                  color: BlaColors.neutralLight,
+                  size: 24,
+                ),
+                const SizedBox(width: BlaSpacings.m),
+                DateDisplay(
+                  date: departureDate,
+                  isToday: departureDate.year == DateTime.now().year &&
+                      departureDate.month == DateTime.now().month &&
+                      departureDate.day == DateTime.now().day,
+                ),
+              ],
             ),
           ],
         ),
