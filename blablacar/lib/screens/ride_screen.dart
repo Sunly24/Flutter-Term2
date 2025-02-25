@@ -20,16 +20,18 @@ class RideScreen extends StatelessWidget {
       appBar: AppBar(title: Text('Ride Search Results')),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Departure: $departure', style: TextStyle(fontSize: 18)),
-            Text('Arrival: $arrival', style: TextStyle(fontSize: 18)),
-            Text('Date: ${date.toLocal()}'.split(' ')[0],
-                style: TextStyle(fontSize: 18)),
-            Text('Seats: $seats', style: TextStyle(fontSize: 18)),
-            SizedBox(height: 20),
-          ],
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('Departure: $departure', style: TextStyle(fontSize: 18)),
+              Text('Arrival: $arrival', style: TextStyle(fontSize: 18)),
+              Text('Date: ${date.toLocal()}'.split(' ')[0],
+                  style: TextStyle(fontSize: 18)),
+              Text('Seats: $seats', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );

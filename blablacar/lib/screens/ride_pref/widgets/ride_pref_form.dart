@@ -8,6 +8,7 @@ import 'location_picker.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/animations_util.dart';
 import '../../../screens/ride_screen.dart';
+import 'seat_number_spinner.dart';
 
 ///
 /// A Ride Preference From is a view to select:
@@ -283,24 +284,36 @@ class _RidePrefFormState extends State<RidePrefForm> {
   /// Builds the passenger count selection field
   Widget _buildPassengerField() {
     return InkWell(
-      onTap: () {
-        // TODO: Implement passenger selection
+      onTap: () async {
+        final result = await Navigator.of(context).push<int>(
+          AnimationUtils.createBottomToTopRoute(
+            SeatSelectionScreen(initialSeats: requestedSeats),
+          ),
+        );
+        if (result != null) {
+          _handleSeatsChanged(result);
+        }
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: BlaSpacings.s),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(
-              Icons.person_outline,
-              color: BlaColors.neutralLight,
-              size: 24,
-            ),
-            const SizedBox(width: BlaSpacings.m),
-            Text(
-              '$requestedSeats',
-              style: BlaTextStyles.body.copyWith(
-                color: BlaColors.textNormal,
-              ),
+            Row(
+              children: [
+                Icon(
+                  Icons.person_outline,
+                  color: BlaColors.neutralLight,
+                  size: 24,
+                ),
+                const SizedBox(width: BlaSpacings.m),
+                Text(
+                  '$requestedSeats',
+                  style: BlaTextStyles.body.copyWith(
+                    color: BlaColors.textNormal,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
