@@ -6,6 +6,7 @@ import '../../../widgets/display/bla_divider.dart';
 import '../../../widgets/actions/bla_button.dart';
 import 'location_picker.dart';
 import '../../../theme/theme.dart';
+import '../../../utils/animations_util.dart';
 
 ///
 /// A Ride Preference From is a view to select:
@@ -295,15 +296,15 @@ class _RidePrefFormState extends State<RidePrefForm> {
     Location? initialLocation,
     Function(Location?) onLocationSelected,
   ) async {
-    final Location? result = await showModalBottomSheet<Location>(
-      context: context,
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        return LocationPickerScreen(
+    final Location? result = await Navigator.of(context).push<Location>(
+      AnimationUtils.createBottomToTopRoute(
+        LocationPickerScreen(
           initialQuery: initialLocation?.name,
-        );
-      },
+        ),
+      ),
     );
+
+    // Always call onLocationSelected with the result (null or non-null)
     onLocationSelected(result);
   }
 }
