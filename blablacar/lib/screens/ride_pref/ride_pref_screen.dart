@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../model/ride_pref/ride_pref.dart';
+import '../../repository/mock/mock_locations_repository.dart';
 import '../../service/ride_prefs_service.dart';
 import '../../theme/theme.dart';
+import '../../service/locations_service.dart';
 
 import '../../utils/animations_util.dart';
 import '../rides/rides_screen.dart';
@@ -24,6 +26,9 @@ class RidePrefScreen extends StatefulWidget {
 }
 
 class _RidePrefScreenState extends State<RidePrefScreen> {
+  final locationsRepository = MockLocationsRepository();
+  late final LocationsService locationsService;
+
   onRidePrefSelected(RidePref newPreference) async {
     // 1 - Update the current preference
     RidePrefService.instance.setCurrentPreference(newPreference);
@@ -34,6 +39,12 @@ class _RidePrefScreenState extends State<RidePrefScreen> {
 
     // 3 - After wait  - Update the state   -- TODO MAKE IT WITH STATE MANAGEMENT
     setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    locationsService = LocationsService(locationsRepository);
   }
 
   @override
@@ -70,7 +81,8 @@ class _RidePrefScreenState extends State<RidePrefScreen> {
                   // 2.1 Display the Form to input the ride preferences
                   RidePrefForm(
                       initRidePref: currentRidePreference,
-                      onSubmit: onRidePrefSelected),
+                      onSubmit: onRidePrefSelected,
+                      locationsService: locationsService),
                   SizedBox(height: BlaSpacings.m),
 
                   // 2.2 Optionally display a list of past preferences

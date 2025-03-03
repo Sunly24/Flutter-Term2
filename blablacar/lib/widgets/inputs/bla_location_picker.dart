@@ -8,10 +8,10 @@ import '../../theme/theme.dart';
 /// This full-screen modal is in charge of providing (if confirmed) a selected location.
 ///
 class BlaLocationPicker extends StatefulWidget {
-  final Location?
-      initLocation; // The picker can be triguer with an existing location name
+  //final Location?initLocation; // The picker can be triguer with an existing location name
+  final LocationsService locationsService;
 
-  const BlaLocationPicker({super.key, this.initLocation});
+  const BlaLocationPicker({super.key, required this.locationsService});
 
   @override
   State<BlaLocationPicker> createState() => _BlaLocationPickerState();
@@ -28,9 +28,7 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
   void initState() {
     super.initState();
 
-    if (widget.initLocation != null) {
-      filteredLocations = getLocationsFor(widget.initLocation!.name);
-    }
+    filteredLocations = widget.locationsService.getLocations();
   }
 
   void onBackSelected() {
@@ -42,27 +40,31 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
   }
 
   void onSearchChanged(String searchText) {
-    List<Location> newSelection = [];
+    // List<Location> newSelection = [];
 
-    if (searchText.length > 1) {
-      // We start to search from 2 characters only.
-      newSelection = getLocationsFor(searchText);
-    }
+    // if (searchText.length > 1) {
+    //   // We start to search from 2 characters only.
+    //   newSelection = getLocationsFor(searchText);
+    // }
 
     setState(() {
-      filteredLocations = newSelection;
+      filteredLocations = widget.locationsService
+          .getLocations()
+          .where((location) =>
+              location.name.toUpperCase().startsWith(searchText.toUpperCase()))
+          .toList();
       // Sort the filtered locations alphabetically by name
       filteredLocations
           .sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
     });
   }
 
-  List<Location> getLocationsFor(String text) {
-    return LocationsService.availableLocations
-        .where((location) =>
-            location.name.toUpperCase().startsWith(text.toUpperCase()))
-        .toList();
-  }
+  // List<Location> getLocationsFor(String text) {
+  //   return LocationsService.availableLocations
+  //       .where((location) =>
+  //           location.name.toUpperCase().startsWith(text.toUpperCase()))
+  //       .toList();
+  // }
 
   @override
   Widget build(BuildContext context) {

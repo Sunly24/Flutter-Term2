@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../model/ride/locations.dart';
 import '../../../model/ride_pref/ride_pref.dart';
+import '../../../service/locations_service.dart';
 import '../../../widgets/display/bla_divider.dart';
 import '../../../widgets/actions/bla_button.dart';
 //import 'date_picker.dart';
@@ -24,6 +25,8 @@ import '../../../utils/animations_util.dart';
 class RidePrefForm extends StatefulWidget {
   // The form can be created with an optional initial RidePref.
   final RidePref? initRidePref;
+  // Inject LocationsService
+  final LocationsService locationsService;
 
   /// Callback triggered when form is submitted with valid data
   final Function(RidePref ridePref) onSubmit;
@@ -32,6 +35,7 @@ class RidePrefForm extends StatefulWidget {
     super.key,
     required this.initRidePref,
     required this.onSubmit,
+    required this.locationsService,
   });
 
   @override
@@ -89,7 +93,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
     // 1- Select a location
     Location? selectedLocation = await Navigator.of(context)
         .push<Location>(AnimationUtils.createBottomToTopRoute(BlaLocationPicker(
-      initLocation: departure,
+      locationsService: widget.locationsService,
     )));
 
     // 2- Update the from if needed
@@ -104,7 +108,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
     // 1- Select a location
     Location? selectedLocation = await Navigator.of(context)
         .push<Location>(AnimationUtils.createBottomToTopRoute(BlaLocationPicker(
-      initLocation: arrival,
+      locationsService: widget.locationsService,
     )));
 
     // 2- Update the from if needed

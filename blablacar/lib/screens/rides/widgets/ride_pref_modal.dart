@@ -1,3 +1,4 @@
+import 'package:blablacar/service/locations_service.dart';
 import 'package:flutter/material.dart';
 import 'package:blablacar/widgets/actions/bla_icon_button.dart';
 
@@ -6,8 +7,10 @@ import '../../../theme/theme.dart';
 import '../../ride_pref/widgets/ride_pref_form.dart';
 
 class RidePrefModal extends StatefulWidget {
+  final LocationsService locationsService;
   const RidePrefModal({
     super.key,
+    required this.locationsService,
     // TODO 7 : We should pass the current prefs to this moda;
   });
 
@@ -52,6 +55,7 @@ class _RidePrefModalState extends State<RidePrefModal> {
               initRidePref:
                   null, // TODO 7 : The form should be displayed with the modal current prefs
               onSubmit: onSubmit,
+              locationsService: widget.locationsService,
             ),
           )),
         ],
