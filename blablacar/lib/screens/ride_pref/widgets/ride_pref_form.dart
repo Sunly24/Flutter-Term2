@@ -26,7 +26,6 @@ class RidePrefForm extends StatefulWidget {
   // The form can be created with an optional initial RidePref.
   final RidePref? initRidePref;
   // Inject LocationsService
-  final LocationsService locationsService;
 
   /// Callback triggered when form is submitted with valid data
   final Function(RidePref ridePref) onSubmit;
@@ -35,7 +34,6 @@ class RidePrefForm extends StatefulWidget {
     super.key,
     required this.initRidePref,
     required this.onSubmit,
-    required this.locationsService,
   });
 
   @override
@@ -93,7 +91,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
     // 1- Select a location
     Location? selectedLocation = await Navigator.of(context)
         .push<Location>(AnimationUtils.createBottomToTopRoute(BlaLocationPicker(
-      locationsService: widget.locationsService,
+      initLocation: departure,
     )));
 
     // 2- Update the from if needed
@@ -108,7 +106,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
     // 1- Select a location
     Location? selectedLocation = await Navigator.of(context)
         .push<Location>(AnimationUtils.createBottomToTopRoute(BlaLocationPicker(
-      locationsService: widget.locationsService,
+      initLocation: arrival,
     )));
 
     // 2- Update the from if needed

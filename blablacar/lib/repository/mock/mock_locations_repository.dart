@@ -1,15 +1,13 @@
+import 'package:blablacar/dummy_data/dummy_data.dart';
+
 import '../locations_repository.dart';
 import '../../model/ride/locations.dart';
 
 class MockLocationsRepository extends LocationsRepository {
+  final List<Location> _locations = fakeLocations;
+
   @override
   List<Location> getLocations() {
-    return [
-      Location(name: 'Phnom Penh', country: Country.cambodia),
-      Location(name: 'Siem Reap', country: Country.cambodia),
-      Location(name: 'Battambang', country: Country.cambodia),
-      Location(name: 'Sihanoukville', country: Country.cambodia),
-      Location(name: 'Kampot', country: Country.cambodia),
-    ];
+    return _locations;
   }
 }

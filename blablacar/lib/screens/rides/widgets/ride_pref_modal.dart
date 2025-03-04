@@ -55,7 +55,6 @@ class _RidePrefModalState extends State<RidePrefModal> {
               initRidePref:
                   null, // TODO 7 : The form should be displayed with the modal current prefs
               onSubmit: onSubmit,
-              locationsService: widget.locationsService,
             ),
           )),
         ],

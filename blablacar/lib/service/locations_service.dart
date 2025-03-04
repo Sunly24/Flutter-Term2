@@ -8,11 +8,30 @@ import '../dummy_data/dummy_data.dart';
 ///   - The list of available rides
 ///
 class LocationsService {
-  final LocationsRepository locationsRepository;
+  static LocationsService? _instance;
+
   static const List<Location> availableLocations =
       fakeLocations; // TODO for now fake data
 
-  LocationsService(this.locationsRepository);
+  final LocationsRepository locationsRepository;
+
+  LocationsService._internal(this.locationsRepository);
+
+  static void init(LocationsRepository locationsRepository) {
+    if (_instance == null) {
+      _instance = LocationsService._internal(locationsRepository);
+    } else {
+      throw Exception("LocationsService is already initialized.");
+    }
+  }
+
+  static LocationsService get instance {
+    if (_instance == null) {
+      throw Exception(
+          "LocationsService is not initialized. Call init() first.");
+    }
+    return _instance!;
+  }
 
   List<Location> getLocations() {
     return locationsRepository.getLocations();

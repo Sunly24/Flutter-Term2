@@ -9,7 +9,6 @@ import '../model/ride/ride.dart';
 ///
 class RidesService {
   static List<Ride> availableRides = fakeRides; // TODO for now fake data
-
   ///
   ///  Return the relevant rides, given the passenger preferences
   ///
