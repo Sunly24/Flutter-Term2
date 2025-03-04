@@ -16,8 +16,8 @@ void main() {
 
   RidesFilter filter = RidesFilter(acceptPets: true);
 
-  var result1 = RidesService.getRidesFor(preferences, null);
-  var result2 = RidesService.getRidesFor(preferences, filter);
+  var result1 = RidesService.getRidesFor(preferences, null, null);
+  var result2 = RidesService.getRidesFor(preferences, filter, null);
 
   test('Battambang to Siem Reap, today, 1 passenger', () {
     expect(result1.length, 4);

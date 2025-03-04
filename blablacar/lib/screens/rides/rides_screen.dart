@@ -33,7 +33,7 @@ class _RidesScreenState extends State<RidesScreen> {
   }
 
   List<Ride> get matchingRides =>
-      RidesService.getRidesFor(currentPreference, null);
+      RidesService.getRidesFor(currentPreference, null, null);
 
   void onBackPressed() {
     Navigator.of(context).pop(); //  Back to the previous view

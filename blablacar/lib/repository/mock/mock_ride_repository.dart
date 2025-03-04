@@ -1,6 +1,6 @@
 import 'package:blablacar/dummy_data/dummy_data.dart';
-import 'package:blablacar/model/ride/locations.dart';
 import 'package:blablacar/model/ride/ride.dart';
+import 'package:blablacar/model/ride/ride_sort.dart';
 import 'package:blablacar/model/ride_pref/ride_pref.dart';
 import 'package:blablacar/model/user/user.dart';
 import 'package:blablacar/repository/ride_repository.dart';
@@ -94,7 +94,8 @@ class MockRideRepository extends RideRepository {
   ];
 
   @override
-  List<Ride> getRides(RidePref preferences, RidesFilter? filter) {
+  List<Ride> getRides(
+      RidePref preferences, RidesFilter? filter, RideSortType? sortType) {
     List<Ride> filteredRides = _rides
         .where((ride) =>
             ride.departureLocation == preferences.departure &&

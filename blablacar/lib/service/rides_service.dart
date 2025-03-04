@@ -3,6 +3,7 @@ import 'package:blablacar/repository/ride_repository.dart';
 
 import '../dummy_data/dummy_data.dart';
 import '../model/ride/ride.dart';
+import '../model/ride/ride_sort.dart';
 
 ////
 ///   This service handles:
@@ -36,8 +37,9 @@ class RidesService {
   ///
   ///  Return the relevant rides, given the passenger preferences
   ///
-  static List<Ride> getRidesFor(RidePref preferences, RidesFilter? filter) {
-    return instance.rideRepository.getRides(preferences, filter);
+  static List<Ride> getRidesFor(
+      RidePref preferences, RidesFilter? filter, RideSortType? sortType) {
+    return instance.rideRepository.getRides(preferences, filter, sortType);
   }
 }
 
