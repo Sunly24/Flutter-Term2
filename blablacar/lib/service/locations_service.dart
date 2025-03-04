@@ -17,7 +17,7 @@ class LocationsService {
 
   LocationsService._internal(this.locationsRepository);
 
-  static void init(LocationsRepository locationsRepository) {
+  static void initialize(LocationsRepository locationsRepository) {
     if (_instance == null) {
       _instance = LocationsService._internal(locationsRepository);
     } else {

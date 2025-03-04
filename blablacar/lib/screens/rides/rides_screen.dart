@@ -1,3 +1,5 @@
+import 'package:blablacar/screens/ride_pref/ride_pref_screen.dart';
+import 'package:blablacar/service/ride_prefs_service.dart';
 import 'package:flutter/material.dart';
 import 'package:blablacar/screens/rides/widgets/ride_pref_bar.dart';
 
@@ -21,10 +23,17 @@ class RidesScreen extends StatefulWidget {
 }
 
 class _RidesScreenState extends State<RidesScreen> {
-  RidePref currentPreference =
-      fakeRidePrefs[0]; // TODO 1 :  We should get it from the service
+  late RidePref currentPreference;
 
-  List<Ride> get matchingRides => RidesService.getRidesFor(currentPreference);
+  @override
+  void initState() {
+    super.initState();
+    currentPreference =
+        RidePrefService.instance.currentPreference ?? fakeRidePrefs[0];
+  }
+
+  List<Ride> get matchingRides =>
+      RidesService.getRidesFor(currentPreference, null);
 
   void onBackPressed() {
     Navigator.of(context).pop(); //  Back to the previous view
