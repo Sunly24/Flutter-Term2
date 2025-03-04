@@ -4,7 +4,7 @@ import '../locations_repository.dart';
 import '../../model/ride/locations.dart';
 
 class MockLocationsRepository extends LocationsRepository {
-  final List<Location> _locations = fakeLocations;
+  final List<Location> _locations = cambodialocations;
 
   @override
   List<Location> getLocations() {

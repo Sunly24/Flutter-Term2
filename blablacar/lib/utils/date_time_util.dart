@@ -1,4 +1,3 @@
-
 import 'package:intl/intl.dart';
 
 ////
@@ -22,6 +21,13 @@ class DateTimeUtils {
   }
 
   static String formatTime(DateTime dateTime) {
-    return DateFormat('HH:mm').format(dateTime); // Example: 14:30 (24-hour format)
+    return DateFormat('HH:mm')
+        .format(dateTime); // Example: 14:30 (24-hour format)
   }
+}
+
+bool isSameDate(DateTime date1, DateTime date2) {
+  return date1.year == date2.year &&
+      date1.month == date2.month &&
+      date1.day == date2.day;
 }

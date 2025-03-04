@@ -10,8 +10,7 @@ import '../dummy_data/dummy_data.dart';
 class LocationsService {
   static LocationsService? _instance;
 
-  static const List<Location> availableLocations =
-      fakeLocations; // TODO for now fake data
+  static const List<Location> availableLocations = fakeLocations;
 
   final LocationsRepository locationsRepository;
 
