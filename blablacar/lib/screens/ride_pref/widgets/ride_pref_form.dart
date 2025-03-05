@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../../../model/ride/locations.dart';
 import '../../../model/ride_pref/ride_pref.dart';
-import '../../../service/locations_service.dart';
 import '../../../widgets/display/bla_divider.dart';
 import '../../../widgets/actions/bla_button.dart';
 //import 'date_picker.dart';

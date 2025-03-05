@@ -1,9 +1,8 @@
-import 'package:blablacar/screens/ride_pref/ride_pref_screen.dart';
+import 'package:blablacar/screens/rides/widgets/ride_pref_modal.dart';
 import 'package:blablacar/service/ride_prefs_service.dart';
+import 'package:blablacar/utils/animations_util.dart';
 import 'package:flutter/material.dart';
 import 'package:blablacar/screens/rides/widgets/ride_pref_bar.dart';
-
-import '../../dummy_data/dummy_data.dart';
 import '../../model/ride/ride.dart';
 import '../../model/ride_pref/ride_pref.dart';
 import '../../service/rides_service.dart';
@@ -23,28 +22,32 @@ class RidesScreen extends StatefulWidget {
 }
 
 class _RidesScreenState extends State<RidesScreen> {
-  late RidePref currentPreference;
+  RidePref currentPreference = RidePrefService.instance.currentPreference!;
 
-  @override
-  void initState() {
-    super.initState();
-    currentPreference =
-        RidePrefService.instance.currentPreference ?? fakeRidePrefs[0];
-  }
-
-  List<Ride> get matchingRides =>
-      RidesService.getRidesFor(currentPreference, null, null);
+  List<Ride> get matchingRides => RidesService.instance.rideRepository
+      .getRides(currentPreference, null, null);
 
   void onBackPressed() {
     Navigator.of(context).pop(); //  Back to the previous view
   }
 
   void onPreferencePressed() async {
-    // TODO  6 : we should push the modal with the current pref
+    // Navigate to the Ride Preference Modal
+    final newPreference = await Navigator.of(context).push<RidePref>(
+      AnimationUtils.createBottomToTopRoute(
+        RidePrefModal(
+          initPreference: currentPreference,
+        ),
+      ),
+    );
 
-    // TODO 9 :  After pop, we should get the new current pref from the modal
-
-    // TODO 10 :  Then we should update the service current pref,   and update the view
+    // After pop, get the new current preference from the modal
+    if (newPreference != null) {
+      setState(() {
+        currentPreference = newPreference;
+        RidePrefService.instance.setCurrentPreference(newPreference);
+      });
+    }
   }
 
   void onFilterPressed() {}

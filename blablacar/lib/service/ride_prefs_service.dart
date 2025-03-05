@@ -45,13 +45,11 @@ class RidePrefService {
 
   // Current preference
   RidePref? get currentPreference {
-    print('Get  current  pref : $_currentPreference');
     return _currentPreference;
   }
 
   void setCurrentPreference(RidePref preference) {
     _currentPreference = preference;
-    print('Set current pref to $_currentPreference');
   }
 
   // Past preferences
